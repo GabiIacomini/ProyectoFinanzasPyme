@@ -4,7 +4,7 @@ import { Plus, ArrowUpCircle, ArrowDownCircle, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import EnhancedTransactionForm from "@/components/enhanced-transaction-form";
 
-export default function FloatingActionButton() {
+export default function FloatingActionButton({ userId }: { userId: string }) {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleOpen = () => setIsOpen(!isOpen);
@@ -23,8 +23,9 @@ export default function FloatingActionButton() {
               <span className="text-sm font-medium text-green-600 dark:text-green-400">Registrar Ingreso</span>
             </div>
             <EnhancedTransactionForm
+              userId={userId}
               defaultType="income"
-              triggerButton={
+              trigger={
                 <Button
                   size="sm"
                   className="bg-green-500 hover:bg-green-600 text-white shadow-lg border-0 rounded-full w-12 h-12"
@@ -42,8 +43,9 @@ export default function FloatingActionButton() {
               <span className="text-sm font-medium text-red-600 dark:text-red-400">Registrar Gasto</span>
             </div>
             <EnhancedTransactionForm
+              userId={userId}
               defaultType="expense"
-              triggerButton={
+              trigger={
                 <Button
                   size="sm"
                   variant="outline"

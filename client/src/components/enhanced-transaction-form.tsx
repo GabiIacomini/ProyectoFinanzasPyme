@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, type ReactNode } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
@@ -13,6 +13,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
 import { Plus } from "lucide-react";
+import { type TransactionCategory } from "@shared/schema";
 
 const transactionFormSchema = z.object({
   description: z.string().min(1, "La descripción es requerida"),
@@ -27,9 +28,11 @@ type TransactionFormValues = z.infer<typeof transactionFormSchema>;
 
 interface TransactionFormProps {
   userId: string;
+  trigger?: ReactNode;
+  defaultType?: "income" | "expense";
 }
 
-export default function TransactionForm({ userId }: TransactionFormProps) {
+export default function TransactionForm({ userId, trigger, defaultType = "expense" }: TransactionFormProps) {
   const [open, setOpen] = useState(false);
   const { toast } = useToast();
   const queryClient = useQueryClient();
@@ -39,14 +42,14 @@ export default function TransactionForm({ userId }: TransactionFormProps) {
     defaultValues: {
       description: "",
       amount: "",
-      type: "expense",
+      type: defaultType,
       categoryId: "",
       currency: "ARS",
       date: new Date().toISOString().split('T')[0],
     },
   });
 
-  const { data: categories } = useQuery({
+  const { data: categories } = useQuery<TransactionCategory[]>({
     queryKey: ['/api/transaction-categories'],
   });
 
@@ -80,15 +83,17 @@ export default function TransactionForm({ userId }: TransactionFormProps) {
     createTransactionMutation.mutate(data);
   };
 
-  const filteredCategories = categories?.filter((cat: any) => cat.type === form.watch("type")) || [];
+  const filteredCategories = categories?.filter((cat) => cat.type === form.watch("type")) || [];
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button data-testid="button-open-transaction-form">
-          <Plus className="h-4 w-4 mr-2" />
-          Nuevo Movimiento
-        </Button>
+        {trigger || (
+          <Button data-testid="button-open-transaction-form">
+            <Plus className="h-4 w-4 mr-2" />
+            Nuevo Movimiento
+          </Button>
+        )}
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]" data-testid="dialog-transaction-form">
         <DialogHeader>
