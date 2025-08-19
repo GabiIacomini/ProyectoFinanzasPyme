@@ -7,7 +7,7 @@ import ExpenseCategories from "@/components/dashboard/expense-categories";
 import TransactionKpiCards from "@/components/dashboard/transaction-kpi-cards";
 import TransactionSummaryChart from "@/components/dashboard/transaction-summary-chart";
 import CurrencySelector from "@/components/dashboard/currency-selector";
-import NotificationGenerator from "@/components/notifications/notification-generator";
+// import NotificationGenerator from "@/components/notifications/notification-generator";
 import QuickActionButtons from "@/components/dashboard/quick-action-buttons";
 import CurrencyRatesBanner from "@/components/dashboard/currency-rates-banner";
 import { Button } from "@/components/ui/button";
@@ -73,10 +73,10 @@ export default function Dashboard() {
   return (
     <PageTransition>
       <Navigation />
-      <NotificationGenerator
+      {/* <NotificationGenerator
         transactions={transactions as any}
         dashboardData={dashboardData}
-      />
+      /> */}
 
       <div className="max-w-7xl mx-auto px-4 py-6">
         {/* Currency Rates Banner */}
@@ -99,7 +99,7 @@ export default function Dashboard() {
 
 
         {/* Quick Action Buttons */}
-        <QuickActionButtons />
+        <QuickActionButtons userId={userId} />
 
         {/* Transaction KPI Cards */}
         <TransactionKpiCards transactions={Array.isArray(transactions) ? transactions : []} />

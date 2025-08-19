@@ -3,7 +3,7 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { ScrollArea } from "@/components/ui/scroll-area";
+// import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
 import {
   Bell,
@@ -165,7 +165,7 @@ export default function NotificationPanel({ isOpen, onClose }: NotificationPanel
           </CardHeader>
 
           <CardContent className="p-0">
-            <ScrollArea className="h-[calc(100vh-80px)]">
+            <div className="h-[calc(100vh-80px)] overflow-y-auto">
               {isLoading ? (
                 <div className="p-4 space-y-4">
                   {[...Array(3)].map((_, i) => (
@@ -262,7 +262,7 @@ export default function NotificationPanel({ isOpen, onClose }: NotificationPanel
                   })}
                 </div>
               )}
-            </ScrollArea>
+            </div>
           </CardContent>
         </Card>
       </div>

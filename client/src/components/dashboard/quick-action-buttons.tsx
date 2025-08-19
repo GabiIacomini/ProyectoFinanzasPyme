@@ -3,7 +3,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { TrendingUp, TrendingDown, Plus, Wallet, ArrowUpCircle, ArrowDownCircle } from "lucide-react";
 import EnhancedTransactionForm from "@/components/enhanced-transaction-form";
 
-export default function QuickActionButtons() {
+export default function QuickActionButtons({ userId }: { userId: string }) {
   return (
     <Card className="mb-6 bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-950/50 dark:to-indigo-950/50 border-blue-200 dark:border-blue-800">
       <CardContent className="p-4">
@@ -20,8 +20,9 @@ export default function QuickActionButtons() {
 
           <div className="flex items-center gap-3">
             <EnhancedTransactionForm
+              userId={userId}
               defaultType="income"
-              triggerButton={
+              trigger={
                 <Button
                   size="sm"
                   className="bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white shadow-sm border-0"
@@ -33,8 +34,9 @@ export default function QuickActionButtons() {
               }
             />
             <EnhancedTransactionForm
+              userId={userId}
               defaultType="expense"
-              triggerButton={
+              trigger={
                 <Button
                   size="sm"
                   variant="outline"

@@ -368,7 +368,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   app.patch("/api/notifications/:notificationId/read", authenticateToken, async (req: AuthRequest, res) => {
-    try {.
+    try {
       const { notificationId } = req.params;
       await storage.markNotificationAsRead(notificationId);
       res.json({ message: "Notificación marcada como leída" });
